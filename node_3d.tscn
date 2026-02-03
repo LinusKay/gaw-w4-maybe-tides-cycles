@@ -1,8 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwxjyl45tcn32"]
+[gd_scene load_steps=31 format=3 uid="uid://bwxjyl45tcn32"]
 
 [ext_resource type="Texture2D" uid="uid://s4ftu6ck0bn8" path="res://HDR_multi_nebulae_1.hdr" id="1_a202f"]
-[ext_resource type="Script" uid="uid://dhkfkfsn70j7h" path="res://camera_3d.gd" id="2_a0tk4"]
-[ext_resource type="Shader" uid="uid://c0fea2xkjyfeb" path="res://aurora_spatial.gdshader" id="2_noarx"]
+[ext_resource type="Shader" path="res://shader/dither.gdshader" id="1_ogsp2"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="2_a0tk4"]
+[ext_resource type="Script" path="res://world_environment.gd" id="2_ed37m"]
+[ext_resource type="Shader" path="res://shader/aurora_spatial.gdshader" id="2_noarx"]
+[ext_resource type="Texture2D" uid="uid://bvkadr4u7em5l" path="res://shader/dither/palette_worm.png" id="2_v6v6d"]
+[ext_resource type="Texture2D" uid="uid://3uyryded1pp3" path="res://shader/dither/bayer16tile2.png" id="3_ijjhg"]
+[ext_resource type="AudioStream" uid="uid://c26kmyrltj3cw" path="res://audio/music/carakacha-slowed.ogg" id="4_nr6g6"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a0tk4"]
 panorama = ExtResource("1_a202f")
@@ -15,22 +20,12 @@ background_mode = 2
 sky = SubResource("Sky_a0tk4")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="Animation" id="Animation_noarx"]
-resource_name = "glide"
-length = 20.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 20),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(1.586277, 0, -104.26315), Vector3(1.586277, 0, -44.635284)]
-}
+glow_intensity = 1.63
+glow_strength = 0.65
+glow_bloom = 0.63
+glow_blend_mode = 1
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_anisotropy = 0.9
 
 [sub_resource type="Animation" id="Animation_a0tk4"]
 length = 0.001
@@ -44,13 +39,60 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(1.586277, 0, -104.26315)]
+"values": [Vector3(1.58628, 0, -104.263)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -2.36398, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_noarx"]
+resource_name = "glide"
+length = 20.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.58628, 0, -104.263), Vector3(1.58628, 0, -44.6353)]
+}
+
+[sub_resource type="Animation" id="Animation_ohxil"]
+resource_name = "spin"
+length = 240.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 156.133),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -2.36398, 0), Vector3(0, -2.36318, 6.28319)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r3fl7"]
 _data = {
-&"RESET": SubResource("Animation_a0tk4"),
-&"glide": SubResource("Animation_noarx")
+"RESET": SubResource("Animation_a0tk4"),
+"glide": SubResource("Animation_noarx"),
+"spin": SubResource("Animation_ohxil")
 }
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_r3fl7"]
@@ -62,56 +104,270 @@ noise = SubResource("FastNoiseLite_r3fl7")
 render_priority = 0
 shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.003
-shader_parameter/color = Color(0.9490196, 0.8627451, 0.7294118, 1)
+shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 2.0
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_jka67"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0tk4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ufg7"]
 render_priority = 0
 shader = ExtResource("2_noarx")
-shader_parameter/speed = 0.003
-shader_parameter/color = Color(0.9490196, 0.8627451, 0.7294118, 1)
+shader_parameter/speed = 0.01
+shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 2.0
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ls7qt"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/speed = 0.01
+shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
+shader_parameter/emission_strength = 2.0
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_r3fl7")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4s8fu"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/speed = 0.01
+shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
+shader_parameter/emission_strength = 1.0
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.7071067, 0.6123725, -0.35355344, 2.7805946e-08, 0.49999994, 0.86602545, 0.7071069, -0.6123724, 0.35355327, 0.17440638, 0, -1.3247476)
-shadow_enabled = true
+[sub_resource type="CylinderMesh" id="CylinderMesh_lbahe"]
+top_radius = 1.81
+bottom_radius = 0.937
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.71258956, 0, -0.70158124, 0, 1, 0, 0.70158124, 0, -0.71258956, 1.586277, 0, -104.26315)
-script = ExtResource("2_a0tk4")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0tk4"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/speed = 0.003
+shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
+shader_parameter/emission_strength = 2.0
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D"]
-libraries = {
-&"": SubResource("AnimationLibrary_r3fl7")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8s50l"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/speed = 0.003
+shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
+shader_parameter/emission_strength = 1.0
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bvgs4"]
+shader = ExtResource("1_ogsp2")
+shader_parameter/u_bit_depth = 64
+shader_parameter/u_contrast = 1.0
+shader_parameter/u_offset = null
+shader_parameter/u_dither_size = 2
+shader_parameter/u_dither_tex = ExtResource("3_ijjhg")
+shader_parameter/u_color_tex = ExtResource("2_v6v6d")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_weajq"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[sub_resource type="Animation" id="Animation_0uhaa"]
+resource_name = "new_animation"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.356863)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(0.183011, 1),
+"update": 0,
+"values": [-80.0, 0.0]
 }
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(5.58424, 18.801048, -125.08225, -2.4458432, 57.3825, -135.89714, 1.1293406, 31.309433, 324.17697, 35.673042, -45.480225, 25.56776)
+[sub_resource type="Animation" id="Animation_ij337"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7mxww"]
+_data = {
+"RESET": SubResource("Animation_ij337"),
+"new_animation": SubResource("Animation_0uhaa")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_r3fl7")
+script = ExtResource("2_ed37m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.707107, 0.612373, -0.353553, 2.78059e-08, 0.5, 0.866026, 0.707107, -0.612372, 0.353553, 0.174406, 0, -1.32475)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.712591, 0, -0.70158, 0, 1, 0, 0.70158, 0, -0.712591, 1.58628, 0, -104.263)
+near = 0.001
+far = 10000.0
+script = ExtResource("2_a0tk4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport/Camera3D"]
+libraries = {
+"": SubResource("AnimationLibrary_r3fl7")
+}
+autoplay = "spin"
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(5.58424, 18.801, -125.082, -2.44584, 57.3825, -135.897, 1.12934, 31.3094, 324.177, 35.673, -45.4802, 25.5678)
 material_override = SubResource("ShaderMaterial_noarx")
 mesh = SubResource("CylinderMesh_jka67")
+skeleton = NodePath("../../..")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(-121.415184, -12.767933, -133.25096, 41.78289, -57.82149, -102.67771, -36.707577, -23.584444, 323.87106, 226.12, 89.6962, 64.74895)
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-121.415, -12.7679, -133.251, 41.7829, -57.8215, -102.678, -36.7076, -23.5844, 323.871, 226.12, 89.6962, 64.7489)
+material_override = SubResource("ShaderMaterial_8ufg7")
+mesh = SubResource("CylinderMesh_jka67")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-22.5202, 7.19747, -357.359, 33.7642, -60.8844, -56.093, -127.231, -17.4313, 48.3675, 223.094, 89.6962, 486.511)
+material_override = SubResource("ShaderMaterial_ls7qt")
+mesh = SubResource("CylinderMesh_jka67")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-219.649, -17.4309, -957.574, 70.5079, -150.087, -242.828, -156.706, -43.0975, 1232.94, 740.695, 588.886, 1096.09)
+material_override = SubResource("ShaderMaterial_4s8fu")
+mesh = SubResource("CylinderMesh_jka67")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(4176.3, 330.754, 2570.36, -903.803, 1661.91, -392.083, -2596.47, -46.4902, 4270.78, 5048.84, -3608.59, 2473.01)
+material_override = SubResource("ShaderMaterial_4s8fu")
+mesh = SubResource("CylinderMesh_lbahe")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(358.554, 83.3232, 439.186, 111.99, -269.026, 133.092, -234.743, -1.07482, 734.32, -178.814, 89.6962, 883.825)
 material_override = SubResource("ShaderMaterial_a0tk4")
 mesh = SubResource("CylinderMesh_jka67")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-401.88, -50.3837, 329.561, 111.99, -269.026, 133.092, -148.855, -66.3731, -789.62, 717.689, -430.487, 1262.48)
+material_override = SubResource("ShaderMaterial_8s50l")
+mesh = SubResource("CylinderMesh_jka67")
+skeleton = NodePath("../../..")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+material = SubResource("ShaderMaterial_bvgs4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_weajq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/TextureRect"]
+libraries = {
+"": SubResource("AnimationLibrary_7mxww")
+}
+autoplay = "new_animation"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control/TextureRect"]
+stream = ExtResource("4_nr6g6")
+autoplay = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -599.411)
+radius = 46.1677
