@@ -1,0 +1,117 @@
+[gd_scene load_steps=15 format=3 uid="uid://bwxjyl45tcn32"]
+
+[ext_resource type="Texture2D" uid="uid://s4ftu6ck0bn8" path="res://HDR_multi_nebulae_1.hdr" id="1_a202f"]
+[ext_resource type="Script" uid="uid://dhkfkfsn70j7h" path="res://camera_3d.gd" id="2_a0tk4"]
+[ext_resource type="Shader" uid="uid://c0fea2xkjyfeb" path="res://aurora_spatial.gdshader" id="2_noarx"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a0tk4"]
+panorama = ExtResource("1_a202f")
+
+[sub_resource type="Sky" id="Sky_a0tk4"]
+sky_material = SubResource("PanoramaSkyMaterial_a0tk4")
+
+[sub_resource type="Environment" id="Environment_r3fl7"]
+background_mode = 2
+sky = SubResource("Sky_a0tk4")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Animation" id="Animation_noarx"]
+resource_name = "glide"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.586277, 0, -104.26315), Vector3(1.586277, 0, -44.635284)]
+}
+
+[sub_resource type="Animation" id="Animation_a0tk4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.586277, 0, -104.26315)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r3fl7"]
+_data = {
+&"RESET": SubResource("Animation_a0tk4"),
+&"glide": SubResource("Animation_noarx")
+}
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r3fl7"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jka67"]
+noise = SubResource("FastNoiseLite_r3fl7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_noarx"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/speed = 0.003
+shader_parameter/color = Color(0.9490196, 0.8627451, 0.7294118, 1)
+shader_parameter/emission_strength = 2.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.1
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jka67"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0tk4"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/speed = 0.003
+shader_parameter/color = Color(0.9490196, 0.8627451, 0.7294118, 1)
+shader_parameter/emission_strength = 2.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
+shader_parameter/offset = 0.0
+shader_parameter/smoothness = 0.15
+shader_parameter/distort = 1.0
+shader_parameter/scale = 0.1
+shader_parameter/STEP = 0.01
+shader_parameter/BASE_DENSITY = 2.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r3fl7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7071067, 0.6123725, -0.35355344, 2.7805946e-08, 0.49999994, 0.86602545, 0.7071069, -0.6123724, 0.35355327, 0.17440638, 0, -1.3247476)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.71258956, 0, -0.70158124, 0, 1, 0, 0.70158124, 0, -0.71258956, 1.586277, 0, -104.26315)
+script = ExtResource("2_a0tk4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_r3fl7")
+}
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(5.58424, 18.801048, -125.08225, -2.4458432, 57.3825, -135.89714, 1.1293406, 31.309433, 324.17697, 35.673042, -45.480225, 25.56776)
+material_override = SubResource("ShaderMaterial_noarx")
+mesh = SubResource("CylinderMesh_jka67")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-121.415184, -12.767933, -133.25096, 41.78289, -57.82149, -102.67771, -36.707577, -23.584444, 323.87106, 226.12, 89.6962, 64.74895)
+material_override = SubResource("ShaderMaterial_a0tk4")
+mesh = SubResource("CylinderMesh_jka67")
