@@ -1,13 +1,16 @@
-[gd_scene load_steps=31 format=3 uid="uid://bwxjyl45tcn32"]
+[gd_scene load_steps=37 format=3 uid="uid://bwxjyl45tcn32"]
 
 [ext_resource type="Texture2D" uid="uid://s4ftu6ck0bn8" path="res://HDR_multi_nebulae_1.hdr" id="1_a202f"]
 [ext_resource type="Shader" path="res://shader/dither.gdshader" id="1_ogsp2"]
+[ext_resource type="Script" path="res://sub_viewport.gd" id="1_p51at"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_a0tk4"]
 [ext_resource type="Script" path="res://world_environment.gd" id="2_ed37m"]
 [ext_resource type="Shader" path="res://shader/aurora_spatial.gdshader" id="2_noarx"]
 [ext_resource type="Texture2D" uid="uid://bvkadr4u7em5l" path="res://shader/dither/palette_worm.png" id="2_v6v6d"]
 [ext_resource type="Texture2D" uid="uid://3uyryded1pp3" path="res://shader/dither/bayer16tile2.png" id="3_ijjhg"]
 [ext_resource type="AudioStream" uid="uid://c26kmyrltj3cw" path="res://audio/music/carakacha-slowed.ogg" id="4_nr6g6"]
+[ext_resource type="AudioStream" uid="uid://bxl7ch3wpwaa7" path="res://audio/sfx/freesound_community-rocket-engine-90835.mp3" id="9_tbq6e"]
+[ext_resource type="AudioStream" uid="uid://nhxlj2i8gmqa" path="res://audio/sfx/tanweraman-dark-rumble-tension-370005.mp3" id="10_ppcpe"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a0tk4"]
 panorama = ExtResource("1_a202f")
@@ -24,8 +27,89 @@ glow_intensity = 1.63
 glow_strength = 0.65
 glow_bloom = 0.63
 glow_blend_mode = 1
+volumetric_fog_enabled = true
 volumetric_fog_emission_energy = 0.0
-volumetric_fog_anisotropy = 0.9
+volumetric_fog_anisotropy = 0.0
+
+[sub_resource type="Animation" id="Animation_05jjx"]
+resource_name = "flashes"
+length = 30.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(20.4441, -0.25, 0, 0.25, 0, 32.8806, -0.25, 0, 0.25, 0, -28.8874, -0.25, 0, 0.25, 0, -7.53806, -0.25, 0, 0.25, 0, 22.1023, -0.25, 0, 0.25, 0, 22.1023, -0.25, 0, 0.25, 0, -15.6218, -0.25, 0, 0.25, 0, 24.7969, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3.76667, 7.33333, 12.0333, 15.8667, 19.7667, 24.2667, 30)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0, -0.811617, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3.76667, 7.33333, 12.0333, 15.8667, 19.7667, 24.2667, 30)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-83.0445, -0.25, 0, 0.25, 0, -112.685, -0.25, 0, 0.25, 0, -81.8009, -0.25, 0, 0.25, 0, -94.6519, -0.25, 0, 0.25, 0, -92.9937, -0.25, 0, 0.25, 0, -114.136, -0.25, 0, 0.25, 0, -93.4083, -0.25, 0, 0.25, 0, -91.3355, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3.76667, 7.33333, 12.0333, 15.8667, 19.7667, 24.2667, 30)
+}
+
+[sub_resource type="Animation" id="Animation_m1wa3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(20.4441, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.811617, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-83.0445, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_471yc"]
+_data = {
+"RESET": SubResource("Animation_m1wa3"),
+"flashes": SubResource("Animation_05jjx")
+}
 
 [sub_resource type="Animation" id="Animation_a0tk4"]
 length = 0.001
@@ -277,26 +361,41 @@ stretch = true
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
+script = ExtResource("1_p51at")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_r3fl7")
 script = ExtResource("2_ed37m")
+go = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(0.707107, 0.612373, -0.353553, 2.78059e-08, 0.5, 0.866026, 0.707107, -0.612372, 0.353553, 0.174406, 0, -1.32475)
 shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.712591, 0, -0.70158, 0, 1, 0, 0.70158, 0, -0.712591, 20.4441, -0.811617, -83.0445)
+omni_range = 14.987
+omni_attenuation = 0.132
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport/OmniLight3D"]
+libraries = {
+"": SubResource("AnimationLibrary_471yc")
+}
+autoplay = "flashes"
+speed_scale = 8.0
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(-0.712591, 0, -0.70158, 0, 1, 0, 0.70158, 0, -0.712591, 1.58628, 0, -104.263)
 near = 0.001
 far = 10000.0
 script = ExtResource("2_a0tk4")
+moving = true
+spinning = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport/Camera3D"]
 libraries = {
 "": SubResource("AnimationLibrary_r3fl7")
 }
-autoplay = "spin"
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(5.58424, 18.801, -125.082, -2.44584, 57.3825, -135.897, 1.12934, 31.3094, 324.177, 35.673, -45.4802, 25.5678)
@@ -367,6 +466,18 @@ autoplay = "new_animation"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control/TextureRect"]
 stream = ExtResource("4_nr6g6")
 autoplay = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Control/TextureRect"]
+stream = ExtResource("9_tbq6e")
+volume_db = -10.0
+autoplay = true
+bus = &"sfx_ship"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="Control/TextureRect"]
+stream = ExtResource("10_ppcpe")
+volume_db = 10.0
+autoplay = true
+bus = &"sfx_ship"
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -599.411)
