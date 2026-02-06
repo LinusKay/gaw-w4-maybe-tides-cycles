@@ -1,6 +1,6 @@
 extends SubViewport
 
-@export var target_fps: float = 5.0  # Desired FPS for the SubViewport
+@export var target_fps: float = 15.0  # Desired FPS for the SubViewport
 
 var frame_count: int = 0
 var update_interval: int = 12  # Default estimate based on 60 FPS
@@ -11,7 +11,7 @@ func _ready() -> void:
 	update_interval = max(1, int(60 / target_fps))
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	frame_count += 1
 
 	# Periodically check FPS and recalculate update interval

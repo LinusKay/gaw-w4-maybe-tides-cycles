@@ -1,16 +1,23 @@
-[gd_scene load_steps=37 format=3 uid="uid://bwxjyl45tcn32"]
+[gd_scene load_steps=45 format=3 uid="uid://bwxjyl45tcn32"]
 
 [ext_resource type="Texture2D" uid="uid://s4ftu6ck0bn8" path="res://HDR_multi_nebulae_1.hdr" id="1_a202f"]
-[ext_resource type="Shader" path="res://shader/dither.gdshader" id="1_ogsp2"]
-[ext_resource type="Script" path="res://sub_viewport.gd" id="1_p51at"]
-[ext_resource type="Script" path="res://camera_3d.gd" id="2_a0tk4"]
-[ext_resource type="Script" path="res://world_environment.gd" id="2_ed37m"]
-[ext_resource type="Shader" path="res://shader/aurora_spatial.gdshader" id="2_noarx"]
+[ext_resource type="Script" uid="uid://05u3xwl0k04c" path="res://game.gd" id="1_c3trs"]
+[ext_resource type="Shader" uid="uid://dmtqobiv82yi0" path="res://shader/dither.gdshader" id="1_ogsp2"]
+[ext_resource type="Script" uid="uid://bw22lud18xdmm" path="res://sub_viewport.gd" id="1_p51at"]
+[ext_resource type="Script" uid="uid://dhkfkfsn70j7h" path="res://camera_3d.gd" id="2_a0tk4"]
+[ext_resource type="Script" uid="uid://egigl0fe7y48" path="res://world_environment.gd" id="2_ed37m"]
+[ext_resource type="Shader" uid="uid://ujgrjmbl6yoi" path="res://shader/aurora_spatial.gdshader" id="2_noarx"]
 [ext_resource type="Texture2D" uid="uid://bvkadr4u7em5l" path="res://shader/dither/palette_worm.png" id="2_v6v6d"]
 [ext_resource type="Texture2D" uid="uid://3uyryded1pp3" path="res://shader/dither/bayer16tile2.png" id="3_ijjhg"]
 [ext_resource type="AudioStream" uid="uid://c26kmyrltj3cw" path="res://audio/music/carakacha-slowed.ogg" id="4_nr6g6"]
+[ext_resource type="Texture2D" uid="uid://cupfhfjb3ce3m" path="res://porthole_left.png" id="7_tcnuu"]
+[ext_resource type="Texture2D" uid="uid://bpwt1mts0tke8" path="res://porthole_right.png" id="8_tuemg"]
+[ext_resource type="Texture2D" uid="uid://bhqy5ji37ty6t" path="res://Sprite-3-export.png" id="9_i0g27"]
 [ext_resource type="AudioStream" uid="uid://bxl7ch3wpwaa7" path="res://audio/sfx/freesound_community-rocket-engine-90835.mp3" id="9_tbq6e"]
+[ext_resource type="Texture2D" uid="uid://cxo7n5f0sax8e" path="res://barcode-green-numbers.png" id="10_ealrb"]
 [ext_resource type="AudioStream" uid="uid://nhxlj2i8gmqa" path="res://audio/sfx/tanweraman-dark-rumble-tension-370005.mp3" id="10_ppcpe"]
+[ext_resource type="Script" uid="uid://pqe1m2bq2ns0" path="res://message_bank.gd" id="13_wlxy5"]
+[ext_resource type="Script" uid="uid://c5fdh4vkw6t8p" path="res://message.gd" id="14_3v7ru"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a0tk4"]
 panorama = ExtResource("1_a202f")
@@ -28,8 +35,45 @@ glow_strength = 0.65
 glow_bloom = 0.63
 glow_blend_mode = 1
 volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.796243, 0.796243, 0.796243, 1)
 volumetric_fog_emission_energy = 0.0
 volumetric_fog_anisotropy = 0.0
+
+[sub_resource type="Animation" id="Animation_m1wa3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(20.4441, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.811617, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-83.0445, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_05jjx"]
 resource_name = "flashes"
@@ -69,46 +113,10 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 3.76667, 7.33333, 12.0333, 15.8667, 19.7667, 24.2667, 30)
 }
 
-[sub_resource type="Animation" id="Animation_m1wa3"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(20.4441, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-0.811617, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-83.0445, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_471yc"]
 _data = {
-"RESET": SubResource("Animation_m1wa3"),
-"flashes": SubResource("Animation_05jjx")
+&"RESET": SubResource("Animation_m1wa3"),
+&"flashes": SubResource("Animation_05jjx")
 }
 
 [sub_resource type="Animation" id="Animation_a0tk4"]
@@ -174,9 +182,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r3fl7"]
 _data = {
-"RESET": SubResource("Animation_a0tk4"),
-"glide": SubResource("Animation_noarx"),
-"spin": SubResource("Animation_ohxil")
+&"RESET": SubResource("Animation_a0tk4"),
+&"glide": SubResource("Animation_noarx"),
+&"spin": SubResource("Animation_ohxil")
 }
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_r3fl7"]
@@ -190,11 +198,11 @@ shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.003
 shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 2.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
@@ -206,11 +214,11 @@ shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.01
 shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 2.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
@@ -220,11 +228,11 @@ shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.01
 shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 2.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
@@ -234,11 +242,11 @@ shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.01
 shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
@@ -252,11 +260,11 @@ shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.003
 shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 2.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
@@ -266,25 +274,52 @@ shader = ExtResource("2_noarx")
 shader_parameter/speed = 0.003
 shader_parameter/color = Color(0.94902, 0.862745, 0.729412, 1)
 shader_parameter/emission_strength = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/offset = 0.0
 shader_parameter/smoothness = 0.15
 shader_parameter/distort = 1.0
 shader_parameter/scale = 0.1
-shader_parameter/noise = SubResource("NoiseTexture2D_jka67")
 shader_parameter/STEP = 0.01
 shader_parameter/BASE_DENSITY = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bvgs4"]
 shader = ExtResource("1_ogsp2")
-shader_parameter/u_bit_depth = 64
-shader_parameter/u_contrast = 1.0
-shader_parameter/u_offset = null
-shader_parameter/u_dither_size = 2
 shader_parameter/u_dither_tex = ExtResource("3_ijjhg")
 shader_parameter/u_color_tex = ExtResource("2_v6v6d")
+shader_parameter/u_bit_depth = 64
+shader_parameter/u_contrast = 1.0
+shader_parameter/u_offset = 0.0
+shader_parameter/u_dither_size = 2
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_weajq"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[sub_resource type="Animation" id="Animation_ij337"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioMusic:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_0uhaa"]
 resource_name = "new_animation"
@@ -304,7 +339,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/1/path = NodePath("AudioMusic:volume_db")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -314,40 +349,21 @@ tracks/1/keys = {
 "values": [-80.0, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_ij337"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer:volume_db")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7mxww"]
 _data = {
-"RESET": SubResource("Animation_ij337"),
-"new_animation": SubResource("Animation_0uhaa")
+&"RESET": SubResource("Animation_ij337"),
+&"new_animation": SubResource("Animation_0uhaa")
 }
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="LabelSettings" id="LabelSettings_cdqbm"]
+font_size = 25
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("world_environment", "omni_light_3d", "camera_3d", "timer")]
+script = ExtResource("1_c3trs")
+world_environment = NodePath("SubViewportContainer/SubViewport/WorldEnvironment")
+omni_light_3d = NodePath("SubViewportContainer/SubViewport/OmniLight3D")
+camera_3d = NodePath("SubViewportContainer/SubViewport/Camera3D")
+timer = NodePath("Timer")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -366,7 +382,6 @@ script = ExtResource("1_p51at")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_r3fl7")
 script = ExtResource("2_ed37m")
-go = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(0.707107, 0.612373, -0.353553, 2.78059e-08, 0.5, 0.866026, 0.707107, -0.612372, 0.353553, 0.174406, 0, -1.32475)
@@ -375,26 +390,23 @@ shadow_enabled = true
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(-0.712591, 0, -0.70158, 0, 1, 0, 0.70158, 0, -0.712591, 20.4441, -0.811617, -83.0445)
 omni_range = 14.987
-omni_attenuation = 0.132
+omni_attenuation = 1.091
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport/OmniLight3D"]
 libraries = {
-"": SubResource("AnimationLibrary_471yc")
+&"": SubResource("AnimationLibrary_471yc")
 }
 autoplay = "flashes"
-speed_scale = 8.0
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-0.712591, 0, -0.70158, 0, 1, 0, 0.70158, 0, -0.712591, 1.58628, 0, -104.263)
+transform = Transform3D(-0.7125906, 0, -0.7015802, 0, 1, 0, 0.7015802, 0, -0.7125906, 1.58628, 0, -104.263)
 near = 0.001
 far = 10000.0
 script = ExtResource("2_a0tk4")
-moving = true
-spinning = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewportContainer/SubViewport/Camera3D"]
 libraries = {
-"": SubResource("AnimationLibrary_r3fl7")
+&"": SubResource("AnimationLibrary_r3fl7")
 }
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
@@ -439,6 +451,60 @@ material_override = SubResource("ShaderMaterial_8s50l")
 mesh = SubResource("CylinderMesh_jka67")
 skeleton = NodePath("../../..")
 
+[node name="Control" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = -564.0
+offset_right = 239.0
+offset_bottom = 497.0
+grow_vertical = 2
+texture = ExtResource("7_tcnuu")
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -235.0
+offset_top = -557.0
+offset_right = 106.0
+offset_bottom = 504.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("8_tuemg")
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/Control"]
+layout_mode = 0
+offset_left = -29.999996
+offset_top = -36.999996
+offset_right = 54.000004
+offset_bottom = 68.0
+rotation = 0.3417818
+texture = ExtResource("9_i0g27")
+
+[node name="TextureRect4" type="TextureRect" parent="SubViewportContainer/SubViewport/Control"]
+layout_mode = 0
+offset_left = 1037.0
+offset_top = -6.0000305
+offset_right = 1123.0
+offset_bottom = 42.99997
+rotation = 0.6544738
+texture = ExtResource("10_ealrb")
+expand_mode = 1
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -459,26 +525,72 @@ texture = SubResource("ViewportTexture_weajq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control/TextureRect"]
 libraries = {
-"": SubResource("AnimationLibrary_7mxww")
+&"": SubResource("AnimationLibrary_7mxww")
 }
-autoplay = "new_animation"
+speed_scale = 0.3
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control/TextureRect"]
+[node name="AudioMusic" type="AudioStreamPlayer" parent="Control/TextureRect"]
 stream = ExtResource("4_nr6g6")
-autoplay = true
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Control/TextureRect"]
+[node name="AudioAmbienceRocket" type="AudioStreamPlayer" parent="Control/TextureRect"]
 stream = ExtResource("9_tbq6e")
 volume_db = -10.0
 autoplay = true
 bus = &"sfx_ship"
 
-[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="Control/TextureRect"]
+[node name="AudioAmbienceRumble" type="AudioStreamPlayer" parent="Control/TextureRect"]
 stream = ExtResource("10_ppcpe")
 volume_db = 10.0
 autoplay = true
 bus = &"sfx_ship"
 
+[node name="MessageBank" type="Control" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -92.0
+offset_right = 497.0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("13_wlxy5")
+
+[node name="Label" type="Label" parent="Control/MessageBank"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "[outgoing] its so grey outside
+[outgoing] feels like we've been climbing forever
+"
+label_settings = SubResource("LabelSettings_cdqbm")
+
+[node name="Timer" type="Timer" parent="Control/MessageBank"]
+
+[node name="Message" type="Node" parent="Control/MessageBank" groups=["message"]]
+script = ExtResource("14_3v7ru")
+text = "its so grey outside"
+incoming = false
+
+[node name="Message2" type="Node" parent="Control/MessageBank" groups=["message"]]
+script = ExtResource("14_3v7ru")
+text = "feels like we've been climbing forever"
+delay_time = 1.0
+incoming = false
+
+[node name="Message3" type="Node" parent="Control/MessageBank" groups=["message"]]
+script = ExtResource("14_3v7ru")
+text = "you have to ascend slowly, otherwise the cloud pressure might tear your craft apart"
+
 [node name="CSGSphere3D" type="CSGSphere3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -599.411)
 radius = 46.1677
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Control/MessageBank/Timer" to="Control/MessageBank" method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
