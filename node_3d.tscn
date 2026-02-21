@@ -399,7 +399,7 @@ libraries = {
 autoplay = "flashes"
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-0.7125906, 0, -0.7015802, 0, 1, 0, 0.7015802, 0, -0.7125906, 1.58628, 0, -104.263)
+transform = Transform3D(-0.7125905, 0, -0.70158017, 0, 1, 0, 0.70158017, 0, -0.7125905, 1.58628, 0, -104.263)
 near = 0.001
 far = 10000.0
 script = ExtResource("2_a0tk4")
